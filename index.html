@@ -5,7 +5,680 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>王凯泊 - 算法工程师</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary-color: #3498db;  /* 主色调 - 蓝色 */
+            --secondary-color: #2c3e50; /* 辅助色 - 深蓝灰 */
+            --accent-color: #e74c3c;   /* 强调色 - 红色 */
+            --light-color: #ecf0f1;     /* 浅色 */
+            --dark-color: #2c3e50;      /* 深色 */
+            --text-color: #333;         /* 正文文字颜色 */
+            --text-light: #7f8c8d;     /* 浅文字颜色 */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 正文字体 */
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'Microsoft YaHei', sans-serif; /* 标题字体 */
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 15px auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* 导航栏 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--secondary-color);
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--secondary-color);
+        }
+        
+        /* 首屏展示 */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(231, 76, 60, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero-content h2 {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+        
+        .hero-btns {
+            animation: fadeInDown 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+        
+        .hero-btns .btn {
+            margin: 0 10px;
+        }
+        
+        /* 关于我 */
+        #about {
+            background: white;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .profile-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        /* 专业经历 */
+        #experience {
+            background: var(--light-color);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            padding-right: calc(50% + 30px);
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            padding-left: calc(50% + 30px);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-date {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        /* 技能 */
+        #skills {
+            background: white;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .skill-category {
+            flex: 1;
+            min-width: 300px;
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .skill-item {
+            margin-bottom: 20px;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .skill-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+        
+        /* 项目展示 */
+        #projects {
+            background: var(--light-color);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .project-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .project-img:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(52, 152, 219, 0.1), rgba(44, 62, 80, 0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-card:hover .project-img:after {
+            opacity: 1;
+        }
+        
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+        }
+        
+        .project-info {
+            padding: 20px;
+        }
+        
+        .project-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .project-description {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .tech-tag {
+            padding: 5px 10px;
+            background: var(--light-color);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-color);
+        }
+        
+        /* 教育背景 */
+        #education {
+            background: white;
+        }
+        
+        .education-item {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            padding: 30px;
+            background: var(--light-color);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .education-degree {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .education-date {
+            color: var(--text-light);
+        }
+        
+        /* 联系方式 */
+        #contact {
+            background: var(--light-color);
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 20px;
+        }
+        
+        .contact-details {
+            list-style: none;
+        }
+        
+        .contact-details li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-details i {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .social-links li {
+            margin: 0 10px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        
+        /* 动画 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 0;
+                transition: all 0.5s ease;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            
+            .hero-content h2 {
+                font-size: 20px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .timeline:before {
+                left: 30px;
+            }
+            
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding-left: 80px;
+                padding-right: 0;
+                text-align: left;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+            
+            .profile-img {
+                width: 250px;
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 28px;
+            }
+            
+            .hero-content h2 {
+                font-size: 18px;
+            }
+            
+            .hero-btns .btn {
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .profile-img {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- 导航栏 -->
@@ -49,7 +722,7 @@
             <div class="about-content">
                 <div class="about-img">
                     <!-- 专业头像 -->
-                    <img src="images/profile.jpg" 
+                    <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
                          alt="王凯泊" class="profile-img">
                 </div>
                 <div class="about-text">
@@ -105,7 +778,7 @@
                             <span>90%</span>
                         </div>
                         <div class="skill-bar">
-                            <div class="skill-progress" data-width="90%"></div>
+                            <div class="skill-progress" style="width: 90%;"></div>
                         </div>
                     </div>
                     <div class="skill-item">
@@ -114,7 +787,7 @@
                             <span>80%</span>
                         </div>
                         <div class="skill-bar">
-                            <div class="skill-progress" data-width="80%"></div>
+                            <div class="skill-progress" style="width: 80%;"></div>
                         </div>
                     </div>
                 </div>
@@ -126,7 +799,7 @@
                             <span>85%</span>
                         </div>
                         <div class="skill-bar">
-                            <div class="skill-progress" data-width="85%"></div>
+                            <div class="skill-progress" style="width: 85%;"></div>
                         </div>
                     </div>
                     <div class="skill-item">
@@ -135,7 +808,7 @@
                             <span>75%</span>
                         </div>
                         <div class="skill-bar">
-                            <div class="skill-progress" data-width="75%"></div>
+                            <div class="skill-progress" style="width: 75%;"></div>
                         </div>
                     </div>
                 </div>
@@ -147,7 +820,7 @@
                             <span>80%</span>
                         </div>
                         <div class="skill-bar">
-                            <div class="skill-progress" data-width="80%"></div>
+                            <div class="skill-progress" style="width: 80%;"></div>
                         </div>
                     </div>
                     <div class="skill-item">
@@ -156,7 +829,7 @@
                             <span>70%</span>
                         </div>
                         <div class="skill-bar">
-                            <div class="skill-progress" data-width="70%"></div>
+                            <div class="skill-progress" style="width: 70%;"></div>
                         </div>
                     </div>
                 </div>
@@ -171,8 +844,8 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-img">
-                        <img src="images/project-rag.jpg" 
-                             alt="RAG生成高考政策通" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                             alt="RAG生成高考政策通">
                     </div>
                     <div class="project-info">
                         <h3 class="project-title">RAG生成高考政策通</h3>
@@ -187,8 +860,8 @@
                 </div>
                 <div class="project-card">
                     <div class="project-img">
-                        <img src="images/project-coze.jpg" 
-                             alt="Coze创建销售顾问agent" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1655720828013-97bda5d0e5b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Coze创建销售顾问agent">
                     </div>
                     <div class="project-info">
                         <h3 class="project-title">Coze创建销售顾问agent</h3>
@@ -248,7 +921,7 @@
                 </div>
                 <div class="contact-form">
                     <h3>发送消息</h3>
-                    <form id="contactForm">
+                    <form>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="您的姓名" required>
                         </div>
@@ -280,11 +953,107 @@
                     <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                     <li><a href="#"><i class="fab fa-weixin"></i></a></li>
                 </ul>
-                <p class="copyright">&copy; <span id="currentYear"></span> 王凯泊. 保留所有权利.</p>
+                <p class="copyright">&copy; 2023 王凯泊. 保留所有权利.</p>
             </div>
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '10px 0';
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                header.style.padding = '20px 0';
+                header.style.background = 'white';
+            }
+        });
+
+        // 移动端菜单切换
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 技能条动画
+        window.addEventListener('scroll', function() {
+            const skillsSection = document.getElementById('skills');
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            const sectionPosition = skillsSection.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.3;
+            
+            if (sectionPosition < screenPosition) {
+                skillBars.forEach(bar => {
+                    const width = bar.parentElement.previousElementSibling.lastElementChild.textContent;
+                    bar.style.width = width;
+                });
+            }
+        });
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.timeline-content, .project-card, .education-item');
+            
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 200);
+                
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'all 0.5s ease';
+            });
+            
+            // 图片懒加载
+            const lazyImages = document.querySelectorAll('img[data-src]');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            observer.unobserve(img);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(img => {
+                    imageObserver.observe(img);
+                });
+            } else {
+                // 不支持IntersectionObserver时的回退方案
+                lazyImages.forEach(img => {
+                    img.src = img.dataset.src;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
